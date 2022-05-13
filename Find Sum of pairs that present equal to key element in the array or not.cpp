@@ -1,9 +1,9 @@
 #include <iostream>
 using namespace std;
-class find 
+class A
 {
     public:
-    find(int arr[], int n, int k)
+    A(int arr[], int n, int k)
     {
         int i,j;
         for(i=0;i<n;i++)
@@ -12,8 +12,11 @@ class find
             {
                 if(arr[i]+arr[j]==k)
                 {
-                    cout<<"Element found with sum of: "<<arr[i]<<" + "<<arr[j]<<" = "<<k<<endl;
+                    cout<<"\n\nElement found with sum of: "<<arr[i]<<" + "<<arr[j]<<" = "<<k<<endl;
                 }
+				else{
+					break;
+				}
             }
         }
     }
@@ -30,11 +33,12 @@ int main()
     }
     for(int i=0;i<n;i++)
     {
-        cout<<arr[i];
+        cout<<arr[i]<<" ";
     }
     int k;
-    cout<<"Enter the element you want to find the pairs of sum: "<<endl;
+    cout<<"\n\nEnter the element you want to find the pairs of sum: "<<endl;
     cin>>k;
-    find obj(arr,n,k);
+    A obj();
+	A ob1(arr,n,k);
     return 0;
 }
