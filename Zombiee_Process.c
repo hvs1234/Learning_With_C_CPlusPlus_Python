@@ -10,6 +10,7 @@ int main()
     }
     else
     {
+        sleep(3);
         printf("I am a parent having pid is: %d\n",getpid());
         printf("My child pid is: %d\n",p);
     }
