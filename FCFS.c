@@ -1,55 +1,75 @@
 #include<stdio.h>
-typedef struct g
+#include<stdlib.h>
+
+struct process
 {
-    int pid,at,bt,ct,tat,wt;
-} g1;
+    int start_time,pid,at,bt,tat,wt,ct,rt;
+} p[100];
+
+int max(int a, int b)
+{
+    return a>b?a:b;
+}
 
 int main()
 {
-    int p; printf("Enter no. of processes: "); scanf("%d",&p);
-    g1 a[p],t; int sum=0;
-    printf("Enter arrival and burst time: ");
-    for(int i=0;i<p;i++)
+    int n;
+    printf("Enter the no. of process: "); scanf("%d",&n);
+    for(int i=0;i<n;i++)
     {
-        a[i].pid = i+1;
-        scanf("%d %d",&a[i].at,&a[i].bt);
-    }  
-    for(int i=0;i<p;i++)
+        printf("Enter the %d arrival time: ",i);
+        scanf("%d",&p[i].at);
+        p[i].pid = i;
+    }
+    for(int i=0;i<n;i++)
     {
-        for(int j=0;j<p-1;j++)
+        printf("Enter the %d burst time: ",i);
+        scanf("%d",&p[i].bt);
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n-i-1;j++)
         {
-            if(a[j].at>a[j+1].at)
+            if(p[j].at>p[j+1].at)
             {
-                t = a[i]; a[j] = a[j+1]; a[j+1] = t;
+                struct process temp = p[j];
+                p[j] = p[j+1];
+                p[j+1] = temp;
             }
         }
     }
-    for(int i=0;i<p;i++)
+
+    for(int i=0;i<n;i++)
     {
-        if(a[i].at>sum)
-        {
-           sum+=a[i].bt+a[i].at-sum;
-        }
-        else{
-            sum+=a[i].bt;
-        }
-        a[i].ct = sum;
-        a[i].tat = a[i].ct-a[i].at;
-        a[i].wt = a[i].tat-a[i].bt;
+        p[i].start_time = (i==0)?p[i].at:max(p[i].at,p[i-1].ct);
+        p[i].ct = p[i].start_time + p[i].bt;
+        p[i].tat = p[i].ct - p[i].at;
+        p[i].wt = p[i].tat - p[i].bt;
+        p[i].rt = p[i].wt;
+        printf("\nStart_Time is: %d",p[i].start_time);
+        printf("\nC_Time is : %d",p[i].ct);
+        printf("\ntat is : %d",p[i].tat);
+        printf("\nwt is : %d",p[i].wt);
+        printf("\nrt is : %d",p[i].rt);
     }
-    for(int i=0;i<p;i++)
+
+    for(int i=0;i<n;i++)
     {
-        for(int j=0;j<p-1;j++)
+        for(int j=0;j<n-i-1;j++)
         {
-            if(a[j].pid>a[j+1].pid)
+            if(p[j].pid>p[j+1].pid)
             {
-                t = a[i]; a[j] = a[j+1]; a[j+1] = t;
+                struct process temp = p[j];
+                p[j] = p[j+1];
+                p[j+1] = temp;
             }
         }
+        p[i].pid = i;
     }
-    for(int i=0;i<p;i++)
+
+    for(int i=0;i<n;i++)
     {
-        printf("%d %d %d %d %d %d",a[i].pid,a[i].at,a[i].bt,a[i].ct,a[i].tat,a[i].wt);
+        printf("\nPid process is : %d",p[i].pid);
     }
     return 0;
 }
