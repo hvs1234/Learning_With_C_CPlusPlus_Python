@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
-
 #define   SIZE   10
 
 int main()
@@ -46,7 +45,6 @@ int main()
 		  }
 		  x[i] = x[i]/a[i][i];
 	 }
-	 printf("\nSolution:\n");
 	 for(i=1;i<=n;i++)
 	 {
 	  	printf("x[%d] = %0.3f\n",i, x[i]);
