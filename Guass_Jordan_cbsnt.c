@@ -1,58 +1,50 @@
 #include<stdio.h>
 #include<math.h>
-int n;
-void converttodiagonal(float a[][n+1],int n)
-{
-	int i,j,k,x,y;
-	float ratio;
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n;j++)
-		{
-			if(j!=i)
-			{
-				ratio = a[j][i]/a[i][i];
-				for(k=0;k<n+1;k++)
-				{
-					a[j][k]-=(ratio*a[i][k]);
-				}
-				printf("\nIntermediate forms: ");
-				for(x=0;x<n;x++)
-				{
-					for(y=0;y<n+1;y++)
-					{
-						printf("%f",a[x][y]);
-					}
-					printf("\n");
-				}
-				printf("\n");
-			}
-		}
-	}
-}
+#include<stdlib.h>
 
-void printunkowns(float a[][n+1], int n)
-{
-	int i;
-	printf("\nValue of unkowns are: ");
-	for(i=0;i<n;i++)
-	{
-		printf("\nValue of variable %d is: %f",i,a[i][n]/a[i][i]);
-	}
-}
+#define SIZE 10
 
 int main()
 {
-	float a[n][n+1];
-	printf("Enter value of unknown: "); scanf("%d",&n);
-	for(int i=0;i<n;i++)
-	{
-		for(int j=0;j<n+1;j++)
-		{
-			scanf("%f",&a[i][j]);
-		}
-	}
-	converttodiagonal(a,n);
-	printunkowns(a,n);
-	return 0;
+		 float a[SIZE][SIZE], x[SIZE], ratio;
+		 int i,j,k,n;
+		 printf("Enter number of unknowns: ");
+		 scanf("%d", &n);
+		 printf("Enter coefficients of Augmented Matrix:\n");
+		 for(i=1;i<=n;i++)
+		 {
+			  for(j=1;j<=n+1;j++)
+			  {
+				   printf("a[%d][%d] = ",i,j);
+				   scanf("%f", &a[i][j]);
+			  }
+		 }
+		 for(i=1;i<=n;i++)
+		 {
+			  if(a[i][i] == 0.0)
+			  {
+				   printf("Mathematical Error!");
+				   exit(0);
+			  }
+			  for(j=1;j<=n;j++)
+			  {
+				   if(i!=j)
+				   {
+					    ratio = a[j][i]/a[i][i];
+					    for(k=1;k<=n+1;k++)
+					    {
+					     	a[j][k] = a[j][k] - ratio*a[i][k];
+					    }
+				   }
+			  }
+		 }
+		 for(i=1;i<=n;i++)
+		 {
+		  	x[i] = a[i][n+1]/a[i][i];
+		 }
+		 for(i=1;i<=n;i++)
+		 {
+		  	printf("x[%d] = %0.3f\n",i, x[i]);
+		 }
+		 return(0);
 }
